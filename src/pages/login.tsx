@@ -1,4 +1,6 @@
 import { ChangeEvent, FC, useState } from "react";
+import { api } from "../utils/api";
+import Trpc from "./api/trpc/[trpc]";
 
 type loginProps = {};
 
@@ -8,6 +10,8 @@ const login: FC<loginProps> = ({}: loginProps) => {
     password: "",
   });
 
+  const { mutate: login } = api.admin.login.useMutation();
+
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value, name } = event.target;
     setInput((prev) => ({ ...prev, [name]: value }));
@@ -15,7 +19,7 @@ const login: FC<loginProps> = ({}: loginProps) => {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    console.table(input);
+    login(input);
   }
 
   return (
