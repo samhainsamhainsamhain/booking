@@ -43,7 +43,10 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
+  // return createInnerTRPCContext({});
+
+  const { req, res } = _opts;
+  return { prisma, req, res };
 };
 
 /**
