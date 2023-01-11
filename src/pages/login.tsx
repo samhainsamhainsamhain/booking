@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useState } from "react";
 import { api } from "../utils/api";
-import Trpc from "./api/trpc/[trpc]";
 
 type loginProps = {};
 
@@ -10,7 +9,7 @@ const login: FC<loginProps> = ({}: loginProps) => {
     password: "",
   });
 
-  const { mutate: login } = api.admin.login.useMutation();
+  const { mutate: login, isError } = api.admin.login.useMutation();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value, name } = event.target;
@@ -76,6 +75,11 @@ const login: FC<loginProps> = ({}: loginProps) => {
                   Forgot password?
                 </a>
               </div>
+              {isError && (
+                <p className="my-3 inline-block w-full rounded bg-red-600 px-7 py-3 text-center text-sm font-medium uppercase leading-snug text-white">
+                  Invalid login credentials
+                </p>
+              )}
               <button
                 disabled={!input.email || !input.password}
                 type="submit"
