@@ -1,15 +1,21 @@
+import { useRouter } from "next/router";
 import { ChangeEvent, FC, useState } from "react";
 import { api } from "../utils/api";
 
 type loginProps = {};
 
 const login: FC<loginProps> = ({}: loginProps) => {
+  const router = useRouter();
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
 
-  const { mutate: login, isError } = api.admin.login.useMutation();
+  const { mutate: login, isError } = api.admin.login.useMutation({
+    onSuccess: () => {
+      router.push("/dashboard");
+    },
+  });
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value, name } = event.target;
