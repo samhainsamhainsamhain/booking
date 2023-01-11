@@ -4,7 +4,7 @@ import { z } from "zod";
 import { getJwtSecretKey } from "../../../lib/auth";
 import cookie from "cookie";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { adminProcedute, createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 
 export const adminRouter = createTRPCRouter({
@@ -24,14 +24,13 @@ export const adminRouter = createTRPCRouter({
         password === process.env.ADMIN_PASSWORD
       ) {
         // user is authenticated as admin
-        const expirationTime = 1000 * 60 * 60; // 1 hour
         const token = await new SignJWT({})
           .setProtectedHeader({
             alg: "HS256",
           })
           .setJti(nanoid())
           .setIssuedAt()
-          .setExpirationTime(expirationTime)
+          .setExpirationTime("1h")
           .sign(new TextEncoder().encode(getJwtSecretKey()));
 
         res.setHeader(
@@ -50,4 +49,8 @@ export const adminRouter = createTRPCRouter({
         message: "Invalid email or password",
       });
     }),
+
+  sensitive: adminProcedute.mutation(() => {
+    return "sensitive";
+  }),
 });
