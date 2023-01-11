@@ -55,8 +55,9 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import { verifyAuth } from "../../lib/auth";
 
 const t = initTRPC
   .context<Awaited<ReturnType<typeof createTRPCContext>>>()
@@ -87,4 +88,30 @@ export const createTRPCRouter = t.router;
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
+
+const isAdmin = t.middleware(async ({ ctx, next }) => {
+  const { req } = ctx;
+  const token = req.cookies["user-token"];
+
+  if (!token) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "User token is missing",
+    });
+  }
+
+  const verifiedToken = await verifyAuth(token);
+
+  if (!verifiedToken) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "User token is invalid",
+    });
+  }
+
+  // User is authenticated as admin
+  return next();
+});
+
 export const publicProcedure = t.procedure;
+export const adminProcedute = t.procedure.use(isAdmin);
