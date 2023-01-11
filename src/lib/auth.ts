@@ -23,8 +23,6 @@ export async function verifyAuth(token: string) {
 
     return verified.payload as UserJwtPayload;
   } catch (error) {
-    console.log(error);
-
     throw new Error("Your token is invalid");
   }
 }
