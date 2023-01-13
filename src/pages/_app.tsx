@@ -4,6 +4,7 @@ import { api } from "../utils/api";
 
 import "../styles/globals.css";
 import "../styles/Calendar.css";
+import "../styles/Spinner.css";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return <Component {...pageProps} />;
