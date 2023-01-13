@@ -1,8 +1,16 @@
+"use client";
 import { type NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 import Calendar from "../components/Calendar";
+import { type DateTime } from "@types";
+import Spinner from "src/components/Spinner";
 
 const Home: NextPage = () => {
+  const [date, setDate] = useState<DateTime>({
+    bookingTime: null,
+    bookingDate: null,
+  });
   return (
     <>
       <Head>
@@ -12,7 +20,14 @@ const Home: NextPage = () => {
       </Head>
       <main className="">
         <div>
-          <Calendar />
+          {!date.bookingTime && <Calendar date={date} setDate={setDate} />}
+          {date.bookingTime && true ? (
+            <Menu />
+          ) : (
+            <div>
+              <Spinner />
+            </div>
+          )}
         </div>
       </main>
     </>
