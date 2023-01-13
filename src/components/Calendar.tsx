@@ -1,21 +1,15 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import ReactCalendar from "react-calendar";
 import { add, format } from "date-fns";
-import { CLOSING_HOUR, INTERVAL, OPENING_HOUR } from "../../constants";
+import { CLOSING_HOUR, INTERVAL, OPENING_HOUR } from "../constants";
+import { DateTime } from "@types";
 
-type indexProps = {};
-
-type BookingType = {
-  bookingDate: Date | null;
-  bookingTime: Date | null;
+type indexProps = {
+  date: DateTime,
+  setDate: Dispatch<SetStateAction<DateTime>>
 };
 
-const index: FC<indexProps> = ({}: indexProps) => {
-  const [date, setDate] = useState<BookingType>({
-    bookingDate: null,
-    bookingTime: null,
-  });
-
+const Calendar: FC<indexProps> = ({ date, setDate }: indexProps) => {
   function getBookingTimes() {
     if (!date.bookingDate) return;
 
@@ -70,4 +64,4 @@ const index: FC<indexProps> = ({}: indexProps) => {
   );
 };
 
-export default index;
+export default Calendar;
