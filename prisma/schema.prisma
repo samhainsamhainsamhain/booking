@@ -6,12 +6,18 @@ generator client {
 }
 
 datasource db {
-    provider = "mysql"
+    provider = "cockroachdb"
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model MenuItem {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    name        String
+    price       Float
+    description String
+    categories  String[]
+    imageKey    String
+    active      Boolean  @default(true)
 }
