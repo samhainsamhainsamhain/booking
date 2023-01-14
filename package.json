@@ -16,6 +16,7 @@
     "@trpc/next": "^10.7.0",
     "@trpc/react-query": "^10.7.0",
     "@trpc/server": "^10.7.0",
+    "aws-sdk": "^2.1295.0",
     "cookie": "^0.5.0",
     "date-fns": "^2.29.3",
     "jose": "^4.11.2",
