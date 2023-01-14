@@ -13,5 +13,8 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ["booking-samhain.s3.eu-central-1.amazonaws.com"],
+  },
 };
 export default config;
