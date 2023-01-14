@@ -11,13 +11,12 @@ datasource db {
 }
 
 model MenuItem {
-    id          String   @id @default(cuid())
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    name        String
-    price       Float
-    description String
-    categories  String[]
-    imageKey    String
-    active      Boolean  @default(true)
+    id         String   @id @default(cuid())
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    name       String
+    price      Float
+    categories String[]
+    imageKey   String
+    active     Boolean  @default(true)
 }
