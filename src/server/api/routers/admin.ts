@@ -61,6 +61,10 @@ export const adminRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const id = nanoid();
       const fileExtension = input.fileType.split("/")[1];
+
+      if (fileExtension === undefined)
+        throw new Error("File extension is undefined");
+
       const key = `${id}.${fileExtension}`;
 
       const { url, fields } = (await new Promise((resolve, reject) => {
@@ -79,7 +83,7 @@ export const adminRouter = createTRPCRouter({
             resolve(data);
           }
         );
-      })) as any as { url: string; fields: any };
+      })) as any as { url: string; fields: { [key: string]: any } };
 
       return { url, fields, key };
     }),

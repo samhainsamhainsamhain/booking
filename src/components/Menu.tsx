@@ -1,14 +1,14 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { FC, useState } from "react";
+import { GroupBase, OnChangeValue, Props, SingleValue } from "react-select";
+import Select from "react-select";
 import { api } from "src/utils/api";
 import { capitalize, selectOptions } from "src/utils/helpers";
 
 const DynamicSelect = dynamic(() => import("react-select"), { ssr: false });
 
-type MenuProps = {};
-
-const Menu: FC<MenuProps> = ({}: MenuProps) => {
+const Menu: FC = () => {
   const { data: menuItems } = api.menu.getMenuItems.useQuery();
   const [filter, setFilter] = useState<string | undefined>("");
 
@@ -18,6 +18,17 @@ const Menu: FC<MenuProps> = ({}: MenuProps) => {
     return menuItem.categories.includes(filter);
   });
 
+  function handleSelectChange(
+    event: SingleValue<{
+      value: "breakfast" | "lunch" | "dinner" | "all";
+      label: string;
+    }>
+  ) {
+    if (event?.value === "all") {
+      return setFilter(undefined);
+    } else setFilter(event?.value);
+  }
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -26,14 +37,11 @@ const Menu: FC<MenuProps> = ({}: MenuProps) => {
             On Our Menu
           </h2>
           <DynamicSelect
-            onChange={(event) => {
-              // @ts-ignore
-              if (event?.value === "all") setFilter(undefined);
-              // @ts-ignore
-              else setFilter(event?.value);
-            }}
+            // @ts-expect-error // when using nextjs's dynamic import typescript doesn't know what types to expect
+            onChange={handleSelectChange}
             className="border-none outline-none"
             options={selectOptions}
+            isMulti={false}
           />
         </div>
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">

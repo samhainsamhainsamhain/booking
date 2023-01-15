@@ -2,9 +2,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, FC, useState, useRef, useEffect } from "react";
 import { api } from "../utils/api";
 
-type loginProps = {};
-
-const login: FC<loginProps> = ({}: loginProps) => {
+const Login: FC = () => {
   const router = useRouter();
   const [input, setInput] = useState({
     email: "",
@@ -20,13 +18,12 @@ const login: FC<loginProps> = ({}: loginProps) => {
           email: emailRef.current.value,
           password: passwordRef.current.value,
         });
-      console.log(emailRef.current?.value, passwordRef.current?.value);
     }, 300);
   }, []);
 
   const { mutate: login, isError } = api.admin.login.useMutation({
-    onSuccess: () => {
-      router.push("/dashboard");
+    onSuccess: async () => {
+      await router.push("/dashboard");
     },
   });
 
@@ -116,4 +113,4 @@ const login: FC<loginProps> = ({}: loginProps) => {
   );
 };
 
-export default login;
+export default Login;

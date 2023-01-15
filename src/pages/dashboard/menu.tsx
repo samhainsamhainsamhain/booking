@@ -9,8 +9,6 @@ import { Categories } from "@types";
 
 const DynamicSelect = dynamic(() => import("react-select"), { ssr: false });
 
-type MenuProps = {};
-
 type Input = {
   name: string;
   price: number;
@@ -25,7 +23,7 @@ const initialInput: Input = {
   file: undefined,
 };
 
-const Menu: FC<MenuProps> = ({ }: MenuProps) => {
+const Menu: FC = () => {
   const [input, setInput] = useState<Input>(initialInput);
   const [preview, setPrevview] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -51,8 +49,6 @@ const Menu: FC<MenuProps> = ({ }: MenuProps) => {
   }, [input.file]);
 
   function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(111);
-
     if (!event.target.files?.[0]) return setError("No file selected");
     if (event.target.files[0].size > MAX_FILE_SIZE)
       return setError("File size is too big");
@@ -76,7 +72,7 @@ const Menu: FC<MenuProps> = ({ }: MenuProps) => {
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value as any);
+      formData.append(key, value as string | Blob);
     });
 
     await fetch(url, {
@@ -88,6 +84,7 @@ const Menu: FC<MenuProps> = ({ }: MenuProps) => {
   }
 
   async function addMenuItem() {
+    // (async () => {
     const key = await handleImageUpload();
     if (!key) throw new Error("No key");
 
@@ -100,16 +97,17 @@ const Menu: FC<MenuProps> = ({ }: MenuProps) => {
       price: input.price,
     });
 
-    refetch();
+    await refetch();
 
     // Reset input
     setInput(initialInput);
     setPrevview("");
+    // })();
   }
 
   async function handleDelete(imageKey: string, id: string) {
     await deleteMenuItem({ imageKey, id });
-    refetch();
+    await refetch();
   }
 
   return (
@@ -144,7 +142,7 @@ const Menu: FC<MenuProps> = ({ }: MenuProps) => {
             value={input.categories}
             options={selectOptions}
             onChange={(event) =>
-              // @ts-ignore
+              // @ts-expect-error // when using nextjs's dynamic import typescript doesn't know what types to expect
               setInput((prev) => ({ ...prev, categories: event }))
             }
             className="h-12"
@@ -193,9 +191,6 @@ const Menu: FC<MenuProps> = ({ }: MenuProps) => {
           <p className="text-lg font-medium">Your menu items:</p>
           <div>
             {menuItems?.map((menuItem) => {
-              console.log(menuItem);
-
-
               return (
                 <div key={menuItem.id}>
                   <p>{menuItem.name}</p>
@@ -209,7 +204,7 @@ const Menu: FC<MenuProps> = ({ }: MenuProps) => {
                     delete
                   </button>
                 </div>
-              )
+              );
             })}
           </div>
         </div>

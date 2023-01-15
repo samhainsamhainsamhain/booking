@@ -1,8 +1,6 @@
 import { FC } from "react";
 
-type SpinnerProps = {};
-
-const Spinner: FC<SpinnerProps> = ({ }: SpinnerProps) => {
+const Spinner: FC = () => {
   return (
     <svg
       className="spinner"

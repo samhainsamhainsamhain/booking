@@ -5,8 +5,8 @@ import { CLOSING_HOUR, INTERVAL, OPENING_HOUR } from "../constants";
 import { DateTime } from "@types";
 
 type indexProps = {
-  date: DateTime,
-  setDate: Dispatch<SetStateAction<DateTime>>
+  date: DateTime;
+  setDate: Dispatch<SetStateAction<DateTime>>;
 };
 
 const Calendar: FC<indexProps> = ({ date, setDate }: indexProps) => {
@@ -34,8 +34,6 @@ const Calendar: FC<indexProps> = ({ date, setDate }: indexProps) => {
   }
 
   function chooseBookingTime(time: Date) {
-    console.log(time);
-
     setDate((prev) => ({ ...prev, bookingTime: time }));
   }
 
