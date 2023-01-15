@@ -2,10 +2,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import Calendar from "../components/Calendar";
 import { type DateTime } from "@types";
-import Spinner from "src/components/Spinner";
-import Menu from "./dashboard/menu";
+import Spinner from "../components/Spinner";
+import Calendar from "../components/Calendar";
+import Menu from "../components/Menu";
 
 const Home: NextPage = () => {
   const [date, setDate] = useState<DateTime>({
