@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import React, { FC, useState } from "react";
 import { api } from "src/utils/api";
 import { capitalize, selectOptions } from "src/utils/helpers";
@@ -38,11 +39,13 @@ const Menu: FC<MenuProps> = ({}: MenuProps) => {
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
           {filteredMenuItems?.map((menuItem) => (
             <div className="group relative" key={menuItem.id}>
-              <div className="min-h-80 aspect-w-1 aspect-h-1 lg:aspect-none w-full overflow-hidden">
-                <img
+              <div className="min-h-80 aspect-w-1 aspect-h-1 lg:aspect-none relative w-full overflow-hidden">
+                <Image
                   src={menuItem.url}
                   alt={menuItem.name}
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                  width={400}
+                  height={400}
                 />
               </div>
               <div className="mt-4 flex justify-between">
@@ -59,6 +62,7 @@ const Menu: FC<MenuProps> = ({}: MenuProps) => {
                       .join(", ")}
                   </p>
                 </div>
+                <h2 className="text-xl text-gray-700">${menuItem.price}</h2>
               </div>
             </div>
           ))}
