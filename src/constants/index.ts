@@ -5,3 +5,5 @@ export const INTERVAL = 30; // minutes
 export const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
 
 export const categories = ["all", "breakfast", "lunch", "dinner"] as const;
+
+export const now = new Date();
