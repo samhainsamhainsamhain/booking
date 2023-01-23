@@ -6,9 +6,11 @@ import Select from "react-select";
 import { api } from "src/utils/api";
 import { capitalize, selectOptions } from "src/utils/helpers";
 
-const DynamicSelect = dynamic(() => import("react-select"), { ssr: false });
+type MenuProps = {
+  selectedTime: string; // ISO string
+};
 
-const Menu: FC = () => {
+const Menu: FC<MenuProps> = ({ selectedTime }) => {
   const { data: menuItems } = api.menu.getMenuItems.useQuery();
   const [filter, setFilter] = useState<string | undefined>("");
 
@@ -36,8 +38,7 @@ const Menu: FC = () => {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             On Our Menu
           </h2>
-          <DynamicSelect
-            // @ts-expect-error // when using nextjs's dynamic import typescript doesn't know what types to expect
+          <Select
             onChange={handleSelectChange}
             className="border-none outline-none"
             options={selectOptions}
