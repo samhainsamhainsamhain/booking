@@ -21,7 +21,7 @@ export async function getServerSideProps() {
   return { props: { days } };
 }
 
-const opening: FC<openingProps> = ({ days }: openingProps) => {
+const Opening: FC<openingProps> = ({ days }: openingProps) => {
   const [enabled, setEnabled] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [openingHours, setOpeningHours] = useState(getOpeningHours(days));
@@ -155,7 +155,7 @@ const opening: FC<openingProps> = ({ days }: openingProps) => {
   );
 };
 
-export default opening;
+export default Opening;
 
 type OpeningHoursType = {
   name: string;

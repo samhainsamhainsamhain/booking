@@ -31,7 +31,7 @@ const Calendar: FC<CalendarProps> = ({ days, closedDays }) => {
   useEffect(() => {
     if (date.bookingTime) {
       localStorage.setItem("selectedTime", date.bookingTime.toISOString());
-      router.push("/menu");
+      void router.push("/menu");
     }
   }, [date.bookingTime]);
 

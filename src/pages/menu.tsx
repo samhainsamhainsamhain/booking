@@ -1,14 +1,12 @@
 import Menu from "@components/Menu";
 import Spinner from "@components/Spinner";
-import { parseISO } from "date-fns/esm";
+import { parseISO } from "date-fns";
 import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { now } from "src/constants";
 import { api } from "src/utils/api";
 
-type menuProps = {};
-
-const menu: FC<menuProps> = ({}: menuProps) => {
+const MenuPage: FC = () => {
   const router = useRouter();
   const [selectedTime, setSelectedTime] = useState<string | null>(null); // as ISO string
   const { isFetchedAfterMount } = api.menu.checkMenuStatus.useQuery(undefined, {
@@ -21,10 +19,10 @@ const menu: FC<menuProps> = ({}: menuProps) => {
   useEffect(() => {
     const selectedTime = localStorage.getItem("selectedTime");
     if (!selectedTime) {
-      router.push("/");
+      void router.push("/");
     } else {
       const date = parseISO(selectedTime);
-      if (date < now) router.push("/");
+      if (date < now) void router.push("/");
 
       setSelectedTime(selectedTime);
     }
@@ -48,4 +46,4 @@ const menu: FC<menuProps> = ({}: menuProps) => {
   );
 };
 
-export default menu;
+export default MenuPage;
