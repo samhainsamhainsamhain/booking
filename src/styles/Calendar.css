@@ -93,7 +93,7 @@
   background-color: rgb(107 114 128);
 }
 /*Do not show weekends*/
-.react-calendar__month-view__days > .react-calendar__tile,
+/* .react-calendar__month-view__days > .react-calendar__tile,
 .react-calendar__month-view__weekdays__weekday {
   flex-basis: 20% !important;
   max-width: 20% !important;
@@ -104,7 +104,7 @@
 }
 .react-calendar__month-view__days__day--weekend {
   display: none !important;
-}
+} */
 /*end of do not show weekends*/
 .react-calendar__month-view__weekdays__weekday {
   padding: 0.75em;

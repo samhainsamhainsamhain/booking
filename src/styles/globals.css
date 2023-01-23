@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.closed-day {
+  background-color: #550000;
+  color: #ffffff;
+}
+
+.closed-day:hover {
+  background-color: #a50000 !important;
+  color: #ffffff !important;
+}
+
+.closed-day:enabled:focus {
+  background-color: #d30000 !important;
+  color: #ffffff !important;
+}
