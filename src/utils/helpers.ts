@@ -7,7 +7,7 @@ import {
   isEqual,
   parse,
 } from "date-fns";
-import { categories, INTERVAL, now } from "src/constants";
+import { categories, INTERVAL, now, weekdays } from "src/constants";
 import { Day } from "@prisma/client";
 
 export function capitalize(string: string) {
@@ -20,16 +20,7 @@ export const selectOptions = categories.map((category) => ({
 }));
 
 export const weekdayIndexToName = (index: number) => {
-  const days = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
-  return days[index];
+  return weekdays[index];
 };
 
 export function classNames(...classes: string[]) {
@@ -59,11 +50,10 @@ export function getOpeningTimes(startDate: Date, dbDays: Day[]) {
   if (isToday) {
     const rounded = roundUpToNearestMinutes(now, INTERVAL);
     const tooLate = !isBefore(rounded, closingTime);
+
     if (tooLate) throw new Error("No more bookings today");
-    console.log("rounded", rounded);
 
     const isBeforeOpening = isBefore(rounded, openingTime);
-
     hours = getHours(isBeforeOpening ? openingTime : rounded);
     minutes = getMinutes(isBeforeOpening ? openingTime : rounded);
   } else {
