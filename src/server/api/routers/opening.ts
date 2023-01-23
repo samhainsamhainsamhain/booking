@@ -18,10 +18,12 @@ export const openingRouter = createTRPCRouter({
       const results = await Promise.all(
         input.map(async (day) => {
           const updatedDay = await ctx.prisma.day.update({
-            where: { id: day.id },
+            where: {
+              id: day.id,
+            },
             data: {
-              openTime: day.openTime,
               closeTime: day.closeTime,
+              openTime: day.openTime,
             },
           });
 
