@@ -20,3 +20,16 @@ model MenuItem {
     imageKey   String
     active     Boolean  @default(true)
 }
+
+model Day {
+    id String @id @default(cuid())
+    name String
+    dayOfWeek Int
+    openTime String
+    closeTime String
+}
+
+model ClosedDay {
+    id String @id @default(cuid())
+    date DateTime @unique
+}
